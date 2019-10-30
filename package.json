@@ -1,0 +1,8 @@
+{
+  "name": "simple-session",
+  "version": "1.0.0",
+  "description": "Library to get/set session values from cookie and/or URL query string",
+  "main": "simpleSession.js",
+  "author": "Tom Söderlund <tom@tomsoderlund.com>",
+  "license": "MIT"
+}
