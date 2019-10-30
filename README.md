@@ -2,6 +2,8 @@
 
 Library to get/set session values from cookie and/or URL query string.
 
+![simple-browser-session](docs/simple-browser-session_github_preview.jpg)
+
 Get a value:
 
 	getSessionValue(property, defaultValue, options = { useHash = false, cookieName = 'app' })
