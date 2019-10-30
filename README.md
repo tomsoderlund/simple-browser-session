@@ -1,4 +1,4 @@
-# simple-session
+# simple-browser-session
 
 Library to get/set session values from cookie and/or URL query string.
 
