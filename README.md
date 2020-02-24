@@ -1,6 +1,6 @@
 # simple-browser-session
 
-Library to get/set session values from cookie and/or URL query string.
+Library to get/set session values from localStorage/cookie and/or URL query string.
 
 ![simple-browser-session](docs/simple-browser-session_github_preview.jpg)
 
@@ -11,17 +11,24 @@ Library to get/set session values from cookie and/or URL query string.
 
 Get a value:
 
-	getSessionValue(property, defaultValue, options = { useHash = false, cookieName = 'app' })
+	getSessionValue(property, defaultValue, options = { useHash = false, useCookies = false, cookieName = 'app' })
 
 Set a value:
 
-	setSessionValue(property, value, options = { updateCookie = true, updateQuery = false, useHash = false, cookieName = 'app' })
+	setSessionValue(property, value, options = { updateStored = true, updatePath = false, useHash = false, useCookies = false, cookieName = 'app' })
 
+## Options
+
+- `cookieName`: `app` as default.
+- `updateStored`: true/false, update localStorage/cookie
+- `updatePath`: true/false
+- `useCookies`: false as default, uses localStorage if not true.
+- `useHash`: true/false, uses values after # in URL if true.
 
 ## How it works
 
-simple-browser-session creates a cookie called `app` (this can be changed with the `cookieName` prop).
+simple-browser-session uses localStorage, or creates a cookie called `app` (this can be changed with the `cookieName` prop).
 
-This cookie contains a (serialized) JSON object with all the values that you save with `setSessionValue`.
+localStorage/cookie contains a (serialized) JSON object with all the values that you save with `setSessionValue`.
 
-simple-browser-session uses both the URL query string (e.g. `?name=value`) and the cookie. Query strings have precedence over cookie.
+simple-browser-session uses both the URL query string (e.g. `?name=value`) and localStorage/cookie. Query strings have precedence over localStorage/cookie.

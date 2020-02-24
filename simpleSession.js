@@ -23,16 +23,18 @@ const getCookies = () => window.document.cookie.split('; ').reduce((result, str)
   return result
 }, {})
 
+const getCookie = (name) => getCookies()[name]
+
 const setCookie = (name, value) => {
-  window.document.cookie = `${name}=${JSON.stringify(value)}`
+  window.document.cookie = `${name}=${value}`
 }
 
 const parseObject = obj => (typeof (obj) === 'string' && (obj.includes('{') || obj.includes('['))) ? JSON.parse(obj) : obj
 
-const getCurrentValues = (useHash) => {
-  const allCookies = getCookies()
-  const cookie = parseObject(allCookies[cookieName])
-  const query = queryObjectFromString(window.location.href, useHash)
+const getCurrentValues = (options) => {
+  const getValue = options.useCookies ? getCookie : window.localStorage.getItem
+  const cookie = parseObject(getValue(name))
+  const query = queryObjectFromString(window.location.href, options.useHash)
   return Object.assign({}, cookie, query)
 }
 
@@ -40,18 +42,19 @@ const getCurrentValues = (useHash) => {
 
 export const getSessionValue = function (property, defaultValue, options = {}) {
   if (options.cookieName) cookieName = options.cookieName
-  const value = getCurrentValues(options.useHash)[property]
+  const value = getCurrentValues(options)[property]
   return value !== undefined ? value : defaultValue
 }
 
 export const setSessionValue = function (property, value, options = {}) {
-  options.updateCookie = options.updateCookie || true
-  options.updateQuery = options.updateQuery || false
+  options.updateStored = options.updateStored || true
+  options.updatePath = options.updatePath || false
+  const setValue = options.useCookies ? setCookie : window.localStorage.setItem
   if (options.cookieName) cookieName = options.cookieName
-  if (options.updateCookie) {
-    setCookie(cookieName, { [property]: value })
+  if (options.updateStored) {
+    setValue(cookieName, JSON.stringify({ [property]: value }))
   }
-  if (options.updateQuery) {
+  if (options.updatePath) {
     const query = queryObjectFromString(window.location.href, options.useHash)
     const newPath = queryObjectToString(Object.assign({}, query, { [property]: JSON.stringify(value) }), options.useHash)
     window.history.pushState(null, null, newPath)
