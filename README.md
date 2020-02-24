@@ -21,7 +21,7 @@ Set a value:
 
 - `cookieName`: `app` as default.
 - `updateStored`: true/false, update localStorage/cookie
-- `updatePath`: true/false
+- `updatePath`: true/false, update browser URL
 - `useCookies`: false as default, uses localStorage if not true.
 - `useHash`: true/false, uses values after # in URL if true.
 
