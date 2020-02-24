@@ -33,16 +33,15 @@ const parseObject = obj => (typeof (obj) === 'string' && (obj.includes('{') || o
 
 // Public API
 
-export const getSessionValue = function (property, defaultValue, options = {}) {
+module.exports.getSessionValue = function (property, defaultValue, options = {}) {
   if (options.cookieName) cookieName = options.cookieName
-  const getValue = options.useCookies ? getCookie : window.localStorage.getItem
-  const storedValue = parseObject(getValue(property))
+  const storedValue = parseObject(options.useCookies ? getCookie(property) : window.localStorage.getItem(property))
   const queryValues = queryObjectFromString(window.location.href, options.useHash)
   const value = queryValues[property] || storedValue
   return value !== undefined ? value : defaultValue
 }
 
-export const setSessionValue = function (property, value, options = {}) {
+module.exports.setSessionValue = function (property, value, options = {}) {
   options.updateStored = options.updateStored || true
   options.updatePath = options.updatePath || false
   const setValue = options.useCookies ? setCookie : window.localStorage.setItem
