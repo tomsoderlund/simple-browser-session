@@ -31,18 +31,14 @@ const setCookie = (name, value) => {
 
 const parseObject = obj => (typeof (obj) === 'string' && (obj.includes('{') || obj.includes('['))) ? JSON.parse(obj) : obj
 
-const getCurrentValues = (options) => {
-  const getValue = options.useCookies ? getCookie : window.localStorage.getItem
-  const cookie = parseObject(getValue(name))
-  const query = queryObjectFromString(window.location.href, options.useHash)
-  return Object.assign({}, cookie, query)
-}
-
 // Public API
 
 export const getSessionValue = function (property, defaultValue, options = {}) {
   if (options.cookieName) cookieName = options.cookieName
-  const value = getCurrentValues(options)[property]
+  const getValue = options.useCookies ? getCookie : window.localStorage.getItem
+  const storedValue = parseObject(getValue(property))
+  const queryValues = queryObjectFromString(window.location.href, options.useHash)
+  const value = queryValues[property] || storedValue
   return value !== undefined ? value : defaultValue
 }
 
