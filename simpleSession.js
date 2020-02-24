@@ -23,10 +23,14 @@ const getCookies = () => window.document.cookie.split('; ').reduce((result, str)
   return result
 }, {})
 
-const getCookie = (name) => getCookies()[name]
+const getCookie = () => parseObject(getCookies()[cookieName])
 
-const setCookie = (name, value) => {
-  window.document.cookie = `${name}=${value}`
+const getCookieItem = (property) => getCookie()[property]
+
+const setCookieItem = (property, value) => {
+  const mergedCookie = Object.assign({}, getCookie(), { [property]: value })
+  const cookieString = JSON.stringify(mergedCookie)
+  window.document.cookie = `${cookieName}=${cookieString}`
 }
 
 const parseObject = obj => (typeof (obj) === 'string' && (obj.includes('{') || obj.includes('['))) ? JSON.parse(obj) : obj
@@ -35,7 +39,7 @@ const parseObject = obj => (typeof (obj) === 'string' && (obj.includes('{') || o
 
 module.exports.getSessionValue = function (property, defaultValue, options = {}) {
   if (options.cookieName) cookieName = options.cookieName
-  const storedValue = parseObject(options.useCookies ? getCookie(property) : window.localStorage.getItem(property))
+  const storedValue = parseObject(options.useCookies ? getCookieItem(property) : window.localStorage.getItem(property))
   const queryValues = queryObjectFromString(window.location.href, options.useHash)
   const value = queryValues[property] || storedValue
   return value !== undefined ? value : defaultValue
@@ -44,10 +48,11 @@ module.exports.getSessionValue = function (property, defaultValue, options = {})
 module.exports.setSessionValue = function (property, value, options = {}) {
   options.updateStored = options.updateStored || true
   options.updatePath = options.updatePath || false
-  const setValue = options.useCookies ? setCookie : window.localStorage.setItem
   if (options.cookieName) cookieName = options.cookieName
   if (options.updateStored) {
-    setValue(cookieName, JSON.stringify({ [property]: value }))
+    options.useCookies
+      ? setCookieItem(property, JSON.stringify(value))
+      : window.localStorage.setItem(property, JSON.stringify(value))
   }
   if (options.updatePath) {
     const query = queryObjectFromString(window.location.href, options.useHash)
