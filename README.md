@@ -7,15 +7,16 @@ Library to get/set session values from localStorage/cookie and/or URL query stri
 
 ## How to use
 
-  import { getSessionValue, setSessionValue } from 'simple-browser-session'
+    import { getSessionValue, setSessionValue } from 'simple-browser-session'
 
 Get a value:
 
-	getSessionValue(property, defaultValue, options = { useHash: false, useCookies: false, cookieName: 'app' })
+    getSessionValue(property, defaultValue, options = { useHash: false, useCookies: false, cookieName: 'app' })
 
 Set a value:
 
-	setSessionValue(property, value, options = { updateStored: true, updatePath: false, useHash: false, useCookies: false, cookieName: 'app' })
+    setSessionValue(property, value, options = { updateStored: true, updatePath: false, useHash: false, useCookies: false, cookieName: 'app' })
+
 
 ## Options
 
@@ -24,6 +25,7 @@ Set a value:
 - `updatePath`: true/false, update browser URL
 - `useCookies`: false as default, uses localStorage if not true.
 - `useHash`: true/false, uses values after # in URL if true.
+
 
 ## How it works
 
