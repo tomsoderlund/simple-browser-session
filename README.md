@@ -11,11 +11,11 @@ Library to get/set session values from localStorage/cookie and/or URL query stri
 
 Get a value:
 
-	getSessionValue(property, defaultValue, options = { useHash = false, useCookies = false, cookieName = 'app' })
+	getSessionValue(property, defaultValue, options = { useHash: false, useCookies: false, cookieName: 'app' })
 
 Set a value:
 
-	setSessionValue(property, value, options = { updateStored = true, updatePath = false, useHash = false, useCookies = false, cookieName = 'app' })
+	setSessionValue(property, value, options = { updateStored: true, updatePath: false, useHash: false, useCookies: false, cookieName: 'app' })
 
 ## Options
 
