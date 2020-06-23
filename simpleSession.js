@@ -8,6 +8,8 @@
 const DEFAULT_COOKIE_NAME = 'app'
 let cookieName = DEFAULT_COOKIE_NAME
 
+const stringifyObject = obj => typeof obj === 'object' ? JSON.stringify(obj) : obj.toString()
+
 const queryObjectFromString = (url, useHash = false) => (url.split(useHash ? '#' : '?')[1] || '')
   .split('&')
   .reduce((result, propValue) => {
@@ -29,7 +31,7 @@ const getCookieItem = (property) => getCookie()[property]
 
 const setCookieItem = (property, value) => {
   const mergedCookie = Object.assign({}, getCookie(), { [property]: value })
-  const cookieString = JSON.stringify(mergedCookie)
+  const cookieString = stringifyObject(mergedCookie)
   window.document.cookie = `${cookieName}=${cookieString}`
 }
 
@@ -51,12 +53,12 @@ module.exports.setSessionValue = function (property, value, options = {}) {
   if (options.cookieName) cookieName = options.cookieName
   if (options.updateStored) {
     options.useCookies
-      ? setCookieItem(property, JSON.stringify(value))
-      : window.localStorage.setItem(property, JSON.stringify(value))
+      ? setCookieItem(property, stringifyObject(value))
+      : window.localStorage.setItem(property, stringifyObject(value))
   }
   if (options.updatePath) {
     const query = queryObjectFromString(window.location.href, options.useHash)
-    const newPath = queryObjectToString(Object.assign({}, query, { [property]: JSON.stringify(value) }), options.useHash)
+    const newPath = queryObjectToString(Object.assign({}, query, { [property]: stringifyObject(value) }), options.useHash)
     window.history.pushState(null, null, newPath)
   }
 }
