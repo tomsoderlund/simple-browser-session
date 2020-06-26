@@ -44,7 +44,7 @@ module.exports.getSessionValue = function (property, defaultValue, options = {})
   const storedValue = parseObject(options.useCookies ? getCookieItem(property) : window.localStorage.getItem(property))
   const queryValues = queryObjectFromString(window.location.href, options.useHash)
   const value = queryValues[property] || storedValue
-  return value !== undefined ? value : defaultValue
+  return (value !== undefined && value !== null) ? value : defaultValue
 }
 
 module.exports.setSessionValue = function (property, value, options = {}) {

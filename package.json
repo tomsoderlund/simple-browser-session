@@ -1,6 +1,6 @@
 {
   "name": "simple-browser-session",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Library to get/set session values from localStorage/cookie and/or URL query string",
   "main": "simpleSession.js",
   "author": "Tom Söderlund <tom@tomsoderlund.com>",
