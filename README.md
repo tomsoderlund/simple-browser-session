@@ -7,7 +7,7 @@ Library to get/set session values from localStorage/cookie and/or URL query stri
 
 ## How to use
 
-    import { getSessionValue, setSessionValue } from 'simple-browser-session'
+    import { getSessionValue, setSessionValue } from 'simple-browser-session'
 
 Get a value:
 
