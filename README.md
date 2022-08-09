@@ -7,6 +7,10 @@ Library to get/set session values from localStorage/cookie and/or URL query stri
 
 ## How to use
 
+    yarn add simple-browser-session
+
+Then import:
+
     import { getSessionValue, setSessionValue } from 'simple-browser-session'
 
 Get a value:
